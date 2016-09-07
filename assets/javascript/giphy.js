@@ -7,7 +7,7 @@ $(document).ready(function(){
 	var $gifDiv = $("#gifDiv");
 	var $buttonDiv = $('#buttonDiv');
 	var $movieInput = $('#movieInput');
-	var $addSearch = $('#addSearch')
+	var $addButton = $('#addButton');
 
 
 
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 
 	// function for when the user clicks the "Get Gifs!" button for the form in the navbar
-	$addSearch.on('click', function(){
+	$addButton.on('click', function(){
 
 		// Take input from text box and add to button array for rendering
 		var movie = $movieInput.val().trim();
@@ -87,6 +87,8 @@ $(document).ready(function(){
 
 	$(document).on("click", '.movie', function(){
 
+		$gifDiv.empty();
+
 		var movie = makeMovieQuery($(this).data('name'));
 		var limit = "&limit=10";
 		var publicKey = "&api_key=dc6zaTOxFJmzC";
@@ -94,9 +96,24 @@ $(document).ready(function(){
 
 		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
+			// response is an array of objects
 			console.log(response)
-			var url = response.embed_url;
-			var rating = response.rating;
+
+			for(var i = 0; i < response.data.length; i++){
+
+				console.log('in loop');
+				var url = response.data[i].images.original.url;
+				var rating = response.data[i].rating;
+
+				var gif = $('<img>');
+				gif.attr('class', 'gif')
+				gif.attr('src', url);
+
+				console.log(gif)
+
+				$gifDiv.append(gif)
+			};
+			
 
 
 		})

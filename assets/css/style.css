@@ -1,0 +1,22 @@
+
+body{
+	background-color: black;
+}
+
+
+.navbar {
+	background-color: black;
+}
+
+.gif {
+	max-width: 300px;
+	max-height: 300px;
+	margin: 15px;
+	border: 2px solid white;
+}
+
+
+.btn {
+
+	margin: 0 5px;
+}
