@@ -12,6 +12,7 @@ $(document).ready(function(){
 
 
 
+
 	// holds the movie searches that will be made into buttons, including ones the user
 	// inputs
 	var buttonArray = ["Indiana Jones", "Star Wars", "The Godfather", "Back to the Future",
@@ -68,6 +69,13 @@ $(document).ready(function(){
 		return arrayToString(movie);
 	}
 
+	function getGif(){
+		var gif = [];
+
+	}
+
+// On click functions /////////////////////////////////////////////////////////////////////
+
 
 	// function for when the user clicks the "Get Gifs!" button for the form in the navbar
 	$addButton.on('click', function(){
@@ -96,32 +104,41 @@ $(document).ready(function(){
 
 		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
-			// response is an array of objects
 			console.log(response)
+			// response is an array of objects
 
 			for(var i = 0; i < response.data.length; i++){
 
-				console.log('in loop');
+				var stillUrl = response.data[i].images.original_still.url;
 				var url = response.data[i].images.original.url;
 				var rating = response.data[i].rating;
 
 				var gif = $('<img>');
-				gif.attr('class', 'gif')
-				gif.attr('src', url);
-
-				console.log(gif)
+				gif.attr('class', 'gif');
+				gif.data('gif', url);
+				gif.data('gifStill', stillUrl)
+				gif.attr('src', stillUrl);
 
 				$gifDiv.append(gif)
-			};
-			
-
-
-		})
-
-
-
-
+			};	
+		});
 	});
+
+	$(document).on('click', '.gif', function(){
+
+		console.log($(this))
+
+		if($(this).attr('src') == $(this).data('gif')){
+
+			$(this).attr('src', $(this).data('gifStill'))
+
+		}else{
+
+			$(this).attr('src', $(this).data('gif'))
+		}
+	});
+
+
 
 
 	// render the default buttons on page load
