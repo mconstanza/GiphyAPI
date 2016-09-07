@@ -35,7 +35,7 @@ $(document).ready(function(){
 			var button = $('<button>');
 
 			// give the buttons a class, data 'name', and text
-			button.addClass('movie btn btn-info');
+			button.addClass('movie btn btn-danger');
 			button.attr('data-name', buttonArray[i]);
 			button.text(buttonArray[i]);
 
@@ -69,9 +69,14 @@ $(document).ready(function(){
 		return arrayToString(movie);
 	}
 
-	function getGif(){
-		var gif = [];
+	function stopGifs(gifs){
+		
+		for(var i = 0; i < gifs.length; i++){
+		
+			console.log(gifs[i].src);
 
+			$(gifs[i]).attr('src', $(gifs[i]).data('gifStill'));
+		}
 	}
 
 // On click functions /////////////////////////////////////////////////////////////////////
@@ -113,26 +118,29 @@ $(document).ready(function(){
 				var url = response.data[i].images.original.url;
 				var rating = response.data[i].rating;
 
-				var gif = $('<img>');
-				gif.attr('class', 'gif');
-				gif.data('gif', url);
-				gif.data('gifStill', stillUrl)
-				gif.attr('src', stillUrl);
+				var $gif = $('<img>');
+				$gif.attr('class', 'gif');
+				$gif.data('gif', url);
+				$gif.data('gifStill', stillUrl)
+				$gif.attr('src', stillUrl);
 
-				$gifDiv.append(gif)
+				$gifDiv.append($gif)
 			};	
 		});
 	});
 
 	$(document).on('click', '.gif', function(){
 
-		console.log($(this))
+		var $gifs = $('.gif')
+
 
 		if($(this).attr('src') == $(this).data('gif')){
 
 			$(this).attr('src', $(this).data('gifStill'))
 
 		}else{
+
+			stopGifs($gifs);
 
 			$(this).attr('src', $(this).data('gif'))
 		}
