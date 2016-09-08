@@ -21,7 +21,8 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Movie Gipharu </a>
+
+				<a class="navbar-brand" href="#"><span class='glyphicon glyphicon-film'> </span> Movie Gipharu </a>
 				<img src="assets/images/PoweredBy_200_Horizontal_Light-Backgrounds_With_Logo.gif">
 			</div>
 
@@ -29,14 +30,20 @@
 				<div class="form-group">
 					<input type="text" id = "movieInput" class="form-control" placeholder="The Big Lebowski">
 				</div>
-				<button type="submit" id ="addButton" class="btn btn-default">Get me Gifs!</button>
+				<button type="submit" id ="addButton" class="btn btn-default">Add Movie!</button>
 			</form>
 		</div>
 	</nav>
 
 	<div class='container text-center'>
+
+		<div id='movieExistsAlert' class="alert alert-danger alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		   That movie's already in the list!
+		</div>
+
 		<div id="buttonDiv">
-				test
+				
 		</div>
 
 
