@@ -127,7 +127,7 @@ $(document).ready(function(){
 		var movie = makeMovieQuery($(this).data('name'));
 		var limit = "&limit=10";
 		var publicKey = "&api_key=dc6zaTOxFJmzC";
-		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + movie + publicKey + limit;
+		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + publicKey + limit;
 
 		// call the giphy API
 		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
@@ -183,7 +183,7 @@ $(document).ready(function(){
 
 	// make sure alert is hidden to start
 	$('#movieExistsAlert').hide();
-	
+
 	// render the default buttons on page load
 	renderButtons();
 
