@@ -13,15 +13,36 @@ body{
 	padding-top: 10px;
 }
 
-.gif {
-	max-width: 300px;
-	max-height: 300px;
-	margin: 5px 2px;
-	border: 2px solid white;
+.container {
+	box-sizing: border-box;
 }
-
 
 .btn {
 
 	margin: 2px 5px;
 }
+
+.gif {
+	max-width: 300px;
+	max-height: 300px;
+	margin: 0 2px;
+	border: 2px solid white;
+}
+
+
+
+.gifAndRating {
+	color: white;
+	max-width: 320px;
+	max-height: 320px;
+	margin-top: 30px;
+	display: inline-block;
+	position: relative;
+}
+
+.rating {
+	color: white;
+	position: absolute;
+	top: -20px;
+	margin: 0;
+	width: 100%;}

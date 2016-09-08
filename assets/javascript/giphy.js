@@ -88,6 +88,62 @@ $(document).ready(function(){
 		}
 	};
 
+	// AJAX call to get gifs from the Giphy API. Also assigns relevant attributes and writes to DOM
+	function getGifs(title){
+
+		// create the query url 
+		var movie = makeMovieQuery(title.data('name'));
+		var limit = "&limit=10";
+		var publicKey = "&api_key=dc6zaTOxFJmzC";
+		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + publicKey + limit;
+
+		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+			// response is an array of objects
+			// iterate through the array and assign relevant properties to variables
+
+			for(var i = 0; i < response.data.length; i++){
+
+				var stillUrl = response.data[i].images.original_still.url;
+				var url = response.data[i].images.original.url;
+				var rating = response.data[i].rating;
+
+				// create div for images and ratings
+				var $gifAndRatingDiv = $('<div>');
+				$gifAndRatingDiv.attr('class', 'gifAndRating');
+
+				// create span for rating and apply data and class attributes
+				var $rating = $('<span>');
+				$rating.attr('class', 'rating text-center');
+				$rating.data('rating', rating);
+				$rating.text("Rating: " + rating);
+
+				// append the rating span to the gifAndRatingDiv
+				$gifAndRatingDiv.append($rating);
+
+				// create the images
+				var $gif = $('<img>');
+				$gif.attr('class', 'gif');
+
+				// save the animated gif url
+				$gif.data('gif', url);
+				// save the still image url
+				$gif.data('gifStill', stillUrl);
+				// set the gif's default src to the still image
+				$gif.attr('src', stillUrl);
+				// add the gif to the gifAndRatingDiv
+				$gifAndRatingDiv.append($gif);
+				// add the gifAndRatingDiv to the gifDiv
+				$gifDiv.append($gifAndRatingDiv);
+
+
+
+
+
+			};
+		});		
+	};
+
 // On click functions /////////////////////////////////////////////////////////////////////
 
 
@@ -123,39 +179,10 @@ $(document).ready(function(){
 		// clear the div of all gifs
 		$gifDiv.empty();
 
-		// create the query url 
-		var movie = makeMovieQuery($(this).data('name'));
-		var limit = "&limit=10";
-		var publicKey = "&api_key=dc6zaTOxFJmzC";
-		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + publicKey + limit;
-
-		// call the giphy API
-		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
-
-			// response is an array of objects
-			// iterate through the array and assign relevant properties to variables
-
-			for(var i = 0; i < response.data.length; i++){
-
-				var stillUrl = response.data[i].images.original_still.url;
-				var url = response.data[i].images.original.url;
-				var rating = response.data[i].rating;
-
-				// create the images
-				var $gif = $('<img>');
-				$gif.attr('class', 'gif');
-
-				// save the animated gif url
-				$gif.data('gif', url);
-				// save the still image url
-				$gif.data('gifStill', stillUrl)
-				// set the gif's default src to the still image
-				$gif.attr('src', stillUrl);
-				// add the gif to the gifDiv
-				$gifDiv.append($gif)
-			};	
-		});
+		// call the giphy API with the button clicked as an argument
+		getGifs($(this));	
 	});
+
 
 	// when the user click on a gif
 	$(document).on('click', '.gif', function(){
