@@ -116,7 +116,7 @@ $(document).ready(function(){
 				var $rating = $('<span>');
 				$rating.attr('class', 'rating text-center');
 				$rating.data('rating', rating);
-				$rating.text("Rating: " + rating);
+				$rating.text("Rating: " + rating.toUpperCase());
 
 				// append the rating span to the gifAndRatingDiv
 				$gifAndRatingDiv.append($rating);
@@ -136,13 +136,27 @@ $(document).ready(function(){
 				// add the gifAndRatingDiv to the gifDiv
 				$gifDiv.append($gifAndRatingDiv);
 
-
-
-
-
 			};
 		});		
 	};
+
+	// Call the movieDB API to get information on the movie selected
+	function movieInfo(title){
+
+		// create the query URL
+		var movie = makeMovieQuery(title.data('name'));
+		var publicKey = '3c00a4ce42778575918daaa89b4dfde2';
+		var uri = "?api_key=" + publicKey + "&query=" + movie
+		var encodedURI = encodeURI(uri);
+		var queryURL =  'https://api.themoviedb.org/3/search/movie' + encodedURI
+
+
+		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+			console.log(response)
+
+		})
+	}
 
 // On click functions /////////////////////////////////////////////////////////////////////
 
@@ -181,6 +195,8 @@ $(document).ready(function(){
 
 		// call the giphy API with the button clicked as an argument
 		getGifs($(this));	
+
+		movieInfo($(this));
 	});
 
 
