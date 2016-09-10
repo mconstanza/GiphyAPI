@@ -8,6 +8,7 @@ $(document).ready(function(){
 	var $buttonDiv = $('#buttonDiv');
 	var $movieInput = $('#movieInput');
 	var $addButton = $('#addButton');
+	var $movieDataDiv = $('#movieDataDiv');
 
 
 	// holds the movie searches that will be made into default buttons, including 
@@ -146,17 +147,29 @@ $(document).ready(function(){
 		// create the query URL
 		var movie = makeMovieQuery(title.data('name'));
 		var publicKey = '3c00a4ce42778575918daaa89b4dfde2';
-		var uri = "?api_key=" + publicKey + "&query=" + movie
-		var encodedURI = encodeURI(uri);
-		var queryURL =  'https://api.themoviedb.org/3/search/movie' + encodedURI
+		var query = "?api_key=" + publicKey + "&query=" + movie
+		//var encodedURI = encodeURI(uri);
+		var queryURL =  'https://api.themoviedb.org/3/search/movie' + query
 
 
 		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
 			console.log(response)
 
-		})
-	}
+			// accept the first result of the search and set variables
+			var $movie = response.results[0];
+
+			var $title = $movie.title;
+			console.log($title);
+
+			var $release = $movie.release_date;
+			console.log($release);
+
+			var $plot = $movie.overview;
+			console.log($plot);
+
+		});
+	};
 
 // On click functions /////////////////////////////////////////////////////////////////////
 
@@ -222,7 +235,6 @@ $(document).ready(function(){
 			$gif.attr('src', $gif.data('gif'))
 		}
 	});
-
 
 	// make sure alert is hidden to start
 	$('#movieExistsAlert').hide();
