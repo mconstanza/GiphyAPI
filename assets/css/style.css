@@ -1,6 +1,9 @@
 
 body{
 	background-color: black;
+	color: white;
+	font-family: 'Droid Sans', sans-serif;
+
 }
 
 
@@ -17,15 +20,33 @@ body{
 	box-sizing: border-box;
 }
 
-.btn {
+#buttonDiv {
+	margin-bottom: 2%;
+}
 
+.btn {
+	font-size: 18px;
 	margin: 2px 5px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+	text-shadow: none;
+
+}
+
+.movie {
+	background-color: #66ccff;
+	text-shadow: 2px 2px #005580;
+}
+
+.movie:hover {
+	text-shadow: none;
 }
 
 .gif {
 	max-width: 300px;
-	max-height: 300px;
-	margin: 0 2px;
+	height: 169px;
+	margin: 5px 2px 0 2px;
 	border: 2px solid white;
 }
 
@@ -42,7 +63,19 @@ body{
 
 .rating {
 	color: white;
+	font-size: 18px;
 	position: absolute;
 	top: -20px;
 	margin: 0;
-	width: 100%;}
+	width: 100%;
+	font-weight: bold;
+}
+
+
+#movieDataDiv {
+	font-size: 22px;
+}
+
+#titleDiv {
+	margin-top: 1%
+}

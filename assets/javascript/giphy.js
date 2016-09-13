@@ -1,4 +1,4 @@
-// Movie Gifaru 
+// Movie Gifaru
 // This app is designed to search Giphy for the most relevant gifs based on a user's input
 
 $(document).ready(function(){
@@ -10,8 +10,7 @@ $(document).ready(function(){
 	var $addButton = $('#addButton');
 	var $movieDataDiv = $('#movieDataDiv');
 
-
-	// holds the movie searches that will be made into default buttons, including 
+	// holds the movie searches that will be made into default buttons, including
 	// ones the user inputs
 	var buttonArray = ["Indiana Jones", "Star Wars", "The Godfather", "Back to the Future",
 	"Jaws", "Close Encounters of the Third Kind", "The Goonies"];
@@ -34,7 +33,7 @@ $(document).ready(function(){
 			var button = $('<button>');
 
 			// give the buttons a class, data 'name', and text
-			button.addClass('movie btn btn-danger');
+			button.addClass('movie btn');
 			button.attr('data-name', buttonArray[i]);
 			button.text(buttonArray[i]);
 
@@ -51,7 +50,7 @@ $(document).ready(function(){
 			if(movie.toLowerCase() == buttonArray[i].toLowerCase()){
 				$('#movieExistsAlert').show();
 				return false;
-			};	
+			};
 		};
 		return true;
 	};
@@ -64,7 +63,7 @@ $(document).ready(function(){
 		}
 		return string
 	};
-	
+
 	// change the name contained in the button to a string usable in the API query
 	function makeMovieQuery(movieTitle){
 
@@ -82,7 +81,7 @@ $(document).ready(function(){
 
 	// takes an array of gifs (or a jQuery selector of all gifs) and stops them from playing
 	function stopGifs(gifs){
-		
+
 		for(var i = 0; i < gifs.length; i++){
 
 			$(gifs[i]).attr('src', $(gifs[i]).data('gifStill'));
@@ -92,10 +91,10 @@ $(document).ready(function(){
 	// AJAX call to get gifs from the Giphy API. Also assigns relevant attributes and writes to DOM
 	function getGifs(title){
 
-		// create the query url 
+		// create the query url
 		var movie = makeMovieQuery(title.data('name'));
-		var limit = "&limit=10";
 		var publicKey = "&api_key=dc6zaTOxFJmzC";
+		var limit = "&limit=10";
 		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + publicKey + limit;
 
 		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
@@ -138,7 +137,7 @@ $(document).ready(function(){
 				$gifDiv.append($gifAndRatingDiv);
 
 			};
-		});		
+		});
 	};
 
 	// Call the movieDB API to get information on the movie selected
@@ -157,16 +156,58 @@ $(document).ready(function(){
 			console.log(response)
 
 			// accept the first result of the search and set variables
-			var $movie = response.results[0];
+			var movie = response.results[0];
 
-			var $title = $movie.title;
-			console.log($title);
+			var movieID = movie.id;
 
-			var $release = $movie.release_date;
-			console.log($release);
+			var title = movie.title;
+			console.log(title);
 
-			var $plot = $movie.overview;
-			console.log($plot);
+			var release = movie.release_date;
+			console.log(release);
+
+			var plot = movie.overview;
+			console.log(plot);
+
+			var posterPath = movie.poster_path;
+
+			var posterSrc = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2'+ posterPath
+			// clear the movie data div
+			$movieDataDiv.empty();
+
+			// create divs for movie data
+
+
+			var $titleDiv = $('<div>');
+			$titleDiv.attr('id', 'titleDiv')
+			var $title = $('<p>');
+			$title.text(title);
+			$titleDiv.append($title, '<hr>');
+
+			var $releaseDiv = $('<div>');
+			$releaseDiv.attr('id', 'releaseDiv')
+			var $release = $('<p>');
+			$release.text(release);
+			$releaseDiv.append($release, '<hr>');
+
+			var $plotDiv = $('<div>');
+			$plotDiv.attr('id', 'plotDiv')
+			var $plot = $('<p>');
+			$plot.text(plot);
+			$plotDiv.append($plot);
+
+			var $posterDiv = $('<div>');
+			$posterDiv.attr('id', 'posterDiv');
+			var $poster = $('<img>')
+			$poster.attr('src', posterSrc);
+			$posterDiv.append($poster);
+
+			$movieDataDiv.append($posterDiv, $titleDiv, $releaseDiv, $plotDiv);
+
+
+
+
+
 
 		});
 	};
@@ -188,7 +229,7 @@ $(document).ready(function(){
 		if(movieTitleValid(movie)){
 			buttonArray.push(movie);
 		};
-		
+
 		// render the buttons in the buttonArray
 		renderButtons();
 
@@ -207,7 +248,7 @@ $(document).ready(function(){
 		$gifDiv.empty();
 
 		// call the giphy API with the button clicked as an argument
-		getGifs($(this));	
+		getGifs($(this));
 
 		movieInfo($(this));
 	});
