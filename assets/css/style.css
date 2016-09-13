@@ -25,6 +25,7 @@ hr {
 
 .navbar-brand {
 	padding-top: 10px;
+	font-size: 24px;
 }
 
 .container {
@@ -54,6 +55,10 @@ hr {
 .movie:hover {
 	text-shadow: none;
 	color: white;
+}
+
+#gifDiv {
+	text-align: left;
 }
 
 .gif {
