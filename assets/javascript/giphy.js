@@ -5,7 +5,7 @@ $(document).ready(function(){
 
 	// Element variables
 	var $gifDiv = $("#gifDiv");
-	var $buttonDiv = $('#buttonDiv');
+	var $buttonContainer = $('#buttonContainer');
 	var $movieInput = $('#movieInput');
 	var $addButton = $('#addButton');
 	var $movieDataDiv = $('#movieDataDiv');
@@ -23,22 +23,36 @@ $(document).ready(function(){
 
 		// empty the button div each time buttons are rendered so that they are not repeated
 
-		$buttonDiv.empty();
+		$buttonContainer.empty();
 
 		// Loop through the array
 
 		for(var i = 0; i < buttonArray.length; i++){
 
-			// create button elements
-			var button = $('<button>');
+			// create divs that will be formatted as buttons to allow for delete button inside
+			// holds the movie title and closing 'X'
+			var $buttonDiv = $('<div>')
+			$buttonDiv.attr('class', 'buttonDiv btn')
+
+			// movie title 'button'
+			var $button = $('<div>');
 
 			// give the buttons a class, data 'name', and text
-			button.addClass('movie btn');
-			button.attr('data-name', buttonArray[i]);
-			button.text(buttonArray[i]);
+			$button.addClass('movie');
+			$button.attr('data-name', buttonArray[i]);
+			$button.text(buttonArray[i] + " ");
+
+			$buttonDiv.append($button);
+
+			// add the close icon to the button
+			$closeButton = $('<span>');
+			$closeButton.attr('class', 'closeButton glyphicon glyphicon-remove')
+			$closeButton.attr('data-name', buttonArray[i]);
+
+			$buttonDiv.append($closeButton)
 
 			// add the button to the button div
-			$buttonDiv.append(button);
+			$buttonContainer.append($buttonDiv);
 
 		};
 	};
@@ -276,6 +290,15 @@ $(document).ready(function(){
 			$gif.attr('src', $gif.data('gif'))
 		}
 	});
+
+	// when the user clicks on the 'close' icon in a movie button
+	$(document).on('click', '.closeButton', function(){
+		var buttonName = $(this).data('name');
+
+		buttonArray = buttonArray.filter(function(e){ return e !== buttonName})
+
+		renderButtons();
+	})
 
 	// make sure alert is hidden to start
 	$('#movieExistsAlert').hide();
