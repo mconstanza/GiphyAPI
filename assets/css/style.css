@@ -23,12 +23,13 @@ hr {
 
 .navbar-brand {
 	padding-top: 10px;
-	font-size: 24px;
+	font-size: 32px;
 	color: #fff;
 }
 
 .navbar-default .navbar-brand {
     color: #fff;
+		font-family: 'Anton', sans-serif;
 }
 
 .navbar-default .navbar-brand:hover {
