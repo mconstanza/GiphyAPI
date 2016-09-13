@@ -163,7 +163,7 @@ $(document).ready(function(){
 			var title = movie.title;
 			console.log(title);
 
-			var release = movie.release_date;
+			var release = movie.release_date.slice(0, 4);
 			console.log(release);
 
 			var plot = movie.overview;

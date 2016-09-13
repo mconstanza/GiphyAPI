@@ -6,6 +6,17 @@ body{
 
 }
 
+hr {
+	margin: 3px 0;
+}
+
+#releaseDiv p {
+	margin-bottom: 0;
+}
+
+#plotDiv {
+	margin-top: 13px;
+}
 
 .navbar {
 	background-color: black;
@@ -36,11 +47,13 @@ body{
 
 .movie {
 	background-color: #66ccff;
-	text-shadow: 2px 2px #005580;
+	/*text-shadow: 2px 2px 2px #000;*/
+	color: #000;
 }
 
 .movie:hover {
 	text-shadow: none;
+	color: white;
 }
 
 .gif {
