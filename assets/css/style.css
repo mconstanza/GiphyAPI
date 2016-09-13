@@ -109,6 +109,15 @@ hr {
 	font-weight: bold;
 }
 
+.playDiv {
+	position: absolute;
+	top: 68px;
+	width: 100%;
+}
+
+.playDiv .glyphicon {
+	font-size: 60px;
+}
 /* Movie Data ******************************************/
 
 #movieDataDiv {

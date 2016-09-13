@@ -98,7 +98,13 @@ $(document).ready(function(){
 
 		for(var i = 0; i < gifs.length; i++){
 
+			var id = $(gifs[i]).data('id');
+
+			var $gifPlayButton = $('.playDiv').filter('[data-id=' + id + ']')
+
 			$(gifs[i]).attr('src', $(gifs[i]).data('gifStill'));
+
+			$gifPlayButton.show();
 		}
 	};
 
@@ -115,6 +121,7 @@ $(document).ready(function(){
 
 			// response is an array of objects
 			// iterate through the array and assign relevant properties to variables
+			var id = 1;
 
 			for(var i = 0; i < response.data.length; i++){
 
@@ -124,7 +131,7 @@ $(document).ready(function(){
 
 				// create div for images and ratings
 				var $gifAndRatingDiv = $('<div>');
-				$gifAndRatingDiv.attr('class', 'gifAndRating');
+				$gifAndRatingDiv.attr('class', 'gifAndRating text-center');
 
 				// create span for rating and apply data and class attributes
 				var $rating = $('<span>');
@@ -138,6 +145,7 @@ $(document).ready(function(){
 				// create the images
 				var $gif = $('<img>');
 				$gif.attr('class', 'gif');
+				$gif.attr('data-id', id)
 
 				// save the animated gif url
 				$gif.data('gif', url);
@@ -145,10 +153,24 @@ $(document).ready(function(){
 				$gif.data('gifStill', stillUrl);
 				// set the gif's default src to the still image
 				$gif.attr('src', stillUrl);
+
+				// add play button over gif still
+				var $playDiv = $('<div>');
+				$playDiv.attr('class', 'playDiv text-center');
+				var $playSpan = $('<span>');
+				$playSpan.attr('class', 'playSpan glyphicon glyphicon-play')
+
+				$playDiv.append($playSpan);
+				$playDiv.attr('data-id', id)
+
 				// add the gif to the gifAndRatingDiv
 				$gifAndRatingDiv.append($gif);
+
+				$gifAndRatingDiv.append($playDiv);
 				// add the gifAndRatingDiv to the gifDiv
 				$gifDiv.append($gifAndRatingDiv);
+
+				id ++;
 
 			};
 		});
@@ -271,8 +293,45 @@ $(document).ready(function(){
 	// when the user click on a gif
 	$(document).on('click', '.gif', function(){
 
-		// create variable for event
 		var $gif = $(this);
+		// create array of all current gifs
+		var $gifs = $('.gif');
+
+		var id = $gif.data('id');
+
+		var $gifPlayButton = $('.playDiv').filter('[data-id=' + id + ']')
+		// create variable for event
+
+
+		// if a gif is currently playing, stop it
+		if($gif.attr('src') == $gif.data('gif')){
+
+			$gif.attr('src', $gif.data('gifStill'))
+
+			$gifPlayButton.show();
+
+		}else{
+
+			// stop all gifs
+			stopGifs($gifs);
+
+			// hide play button
+
+			$gifPlayButton.hide();
+			// play the current gif
+			$gif.attr('src', $gif.data('gif'))
+		}
+	});
+
+	$(document).on('click', '.playDiv', function(){
+
+		var $gifPlayButton = $(this);
+
+		var id = $gifPlayButton.data('id');
+
+		var $gif = $('.gif').filter('[data-id=' + id + ']')
+		console.log($gif)
+
 		// create array of all current gifs
 		var $gifs = $('.gif');
 
@@ -281,15 +340,21 @@ $(document).ready(function(){
 
 			$gif.attr('src', $gif.data('gifStill'))
 
+			$gifPlayButton.show();
+
 		}else{
 
 			// stop all gifs
 			stopGifs($gifs);
 
+			// hide the play button
+			$gifPlayButton.hide();
+
 			// play the current gif
 			$gif.attr('src', $gif.data('gif'))
 		}
-	});
+	})
+
 
 	// when the user clicks on the 'close' icon in a movie button
 	$(document).on('click', '.closeButton', function(){
