@@ -18,6 +18,14 @@ $(document).ready(function(){
 
 // General Functions ////////////////////////////////////////////////////////////////////
 
+	function randomMovie(array){
+
+		var index = Math.floor(Math.random() * array.length)
+
+		return array[index];
+	}
+
+
 	// creates buttons from the buttonArray
 	function renderButtons(){
 
@@ -189,7 +197,7 @@ $(document).ready(function(){
 
 		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
-			console.log(response)
+			// console.log(response)
 
 			// accept the first result of the search and set variables
 			var movie = response.results[0];
@@ -197,17 +205,17 @@ $(document).ready(function(){
 			var movieID = movie.id;
 
 			var title = movie.title;
-			console.log(title);
 
 			var release = movie.release_date.slice(0, 4);
-			console.log(release);
 
 			var plot = movie.overview;
-			console.log(plot);
 
 			var posterPath = movie.poster_path;
 
 			var posterSrc = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2'+ posterPath
+
+			var link = 'https://www.themoviedb.org/movie/' + movieID + '-' + movie.title
+
 			// clear the movie data div
 			$movieDataDiv.empty();
 
@@ -233,17 +241,21 @@ $(document).ready(function(){
 			$plotDiv.append($plot);
 
 			var $posterDiv = $('<div>');
+
+			// make the poster link to the entry on moviedb.org
+			var $posterLink = $('<a>');
+			$posterLink.attr('href', link);
+			$posterLink.attr('target', '_blank');
+
+			// create the poster div and append image to link
 			$posterDiv.attr('id', 'posterDiv');
 			var $poster = $('<img>')
 			$poster.attr('src', posterSrc);
-			$posterDiv.append($poster);
+			$posterLink.append($poster)
+			$posterDiv.append($posterLink);
 
+			// append all movie data elements to div
 			$movieDataDiv.append($posterDiv, $titleDiv, $releaseDiv, $plotDiv);
-
-
-
-
-
 
 		});
 	};
@@ -330,7 +342,6 @@ $(document).ready(function(){
 		var id = $gifPlayButton.data('id');
 
 		var $gif = $('.gif').filter('[data-id=' + id + ']')
-		console.log($gif)
 
 		// create array of all current gifs
 		var $gifs = $('.gif');
@@ -370,6 +381,19 @@ $(document).ready(function(){
 
 	// render the default buttons on page load
 	renderButtons();
+
+// start the page with some gifs loaded from a random movie in the default list
+	// pick a random movie from the list
+	var randomMovie = randomMovie(buttonArray);
+
+	// match the name of the movie with its corresponding button that has the necessary data attributes
+	var $randomMovie = $('.movie').filter(function(){
+		return $(this).data('name') == randomMovie;
+	});
+	// diplay the gifs and movie info for the selected movie
+	getGifs($randomMovie);
+
+	movieInfo($randomMovie);
 
 
 }); // end of jQuery
