@@ -114,6 +114,7 @@ hr {
 	position: absolute;
 	top: 68px;
 	width: 100%;
+	pointer-events: none;
 }
 
 .playDiv .glyphicon {

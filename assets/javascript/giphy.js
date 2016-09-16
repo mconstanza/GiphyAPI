@@ -335,36 +335,36 @@ $(document).ready(function(){
 		}
 	});
 
-	$(document).on('click', '.playDiv', function(){
+	// $(document).on('click', '.playDiv', function(){
 
-		var $gifPlayButton = $(this);
+	// 	var $gifPlayButton = $(this);
 
-		var id = $gifPlayButton.data('id');
+	// 	var id = $gifPlayButton.data('id');
 
-		var $gif = $('.gif').filter('[data-id=' + id + ']')
+	// 	var $gif = $('.gif').filter('[data-id=' + id + ']')
 
-		// create array of all current gifs
-		var $gifs = $('.gif');
+	// 	// create array of all current gifs
+	// 	var $gifs = $('.gif');
 
-		// if a gif is currently playing, stop it
-		if($gif.attr('src') == $gif.data('gif')){
+	// 	// if a gif is currently playing, stop it
+	// 	if($gif.attr('src') == $gif.data('gif')){
 
-			$gif.attr('src', $gif.data('gifStill'))
+	// 		$gif.attr('src', $gif.data('gifStill'))
 
-			$gifPlayButton.show();
+	// 		$gifPlayButton.show();
 
-		}else{
+	// 	}else{
 
-			// stop all gifs
-			stopGifs($gifs);
+	// 		// stop all gifs
+	// 		stopGifs($gifs);
 
-			// hide the play button
-			$gifPlayButton.hide();
+	// 		// hide the play button
+	// 		$gifPlayButton.hide();
 
-			// play the current gif
-			$gif.attr('src', $gif.data('gif'))
-		}
-	})
+	// 		// play the current gif
+	// 		$gif.attr('src', $gif.data('gif'))
+	// 	}
+	// })
 
 
 	// when the user clicks on the 'close' icon in a movie button
